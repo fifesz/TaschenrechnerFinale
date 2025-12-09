@@ -6,23 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TaschenrechnerTest {
 
-    // ----------------------------------------------------------
-    // Hilfsmethode: neues Objekt erstellen
-    // ----------------------------------------------------------
     private TaschenrechnerLogic newCalc() {
         return new TaschenrechnerLogic();
     }
-
-    // ----------------------------------------------------------
-    // Grundlegendes Verhalten
-    // ----------------------------------------------------------
+   //Testet ob Display initial '0' anzeigt
     @Test
     void testInitialState() {
         TaschenrechnerLogic calc = newCalc();
         assertEquals("0", calc.getDisplayText());
         assertFalse(calc.isErrorState());
     }
-
+//Testet ob Ziffern korrekt hintereinander angehängt werden
     @Test
     void testAppendDigits() {
         TaschenrechnerLogic calc = newCalc();
@@ -30,7 +24,7 @@ public class TaschenrechnerTest {
         calc.appendDigit("2");
         assertEquals("52", calc.getDisplayText());
     }
-
+//Testet ob Dezimalpunkt korrekt gesetzt wird
     @Test
     void testAppendDot() {
         TaschenrechnerLogic calc = newCalc();
@@ -39,19 +33,16 @@ public class TaschenrechnerTest {
         calc.appendDigit("5");
         assertEquals("3.5", calc.getDisplayText());
     }
-
+//Verhindert das Setzen eines doppelten Dezimalpunktes
     @Test
     void testPreventDoubleDot() {
         TaschenrechnerLogic calc = newCalc();
         calc.appendDigit("7");
         calc.appendDot();
-        calc.appendDot();   // ignored
+        calc.appendDot();
         assertEquals("7.", calc.getDisplayText());
     }
-
-    // ----------------------------------------------------------
-    // Operatoren
-    // ----------------------------------------------------------
+//Testet die korrekte Addition
     @Test
     void testAddition() {
         TaschenrechnerLogic calc = newCalc();
@@ -61,7 +52,7 @@ public class TaschenrechnerTest {
         calc.equalsPressed();
         assertEquals("10", calc.getDisplayText());
     }
-
+//Testet die korrekte Subtraktion
     @Test
     void testSubtraction() {
         TaschenrechnerLogic calc = newCalc();
@@ -71,7 +62,7 @@ public class TaschenrechnerTest {
         calc.equalsPressed();
         assertEquals("4", calc.getDisplayText());
     }
-
+//Testet die korrekte Multiplikation
     @Test
     void testMultiplication() {
         TaschenrechnerLogic calc = newCalc();
@@ -81,7 +72,7 @@ public class TaschenrechnerTest {
         calc.equalsPressed();
         assertEquals("21", calc.getDisplayText());
     }
-
+//Testet die korrekte Division
     @Test
     void testDivision() {
         TaschenrechnerLogic calc = newCalc();
@@ -91,7 +82,7 @@ public class TaschenrechnerTest {
         calc.equalsPressed();
         assertEquals("4", calc.getDisplayText());
     }
-
+//Erzeugt einen Fehlerzustand bei Division durch Null
     @Test
     void testDivisionByZero() {
         TaschenrechnerLogic calc = newCalc();
@@ -103,10 +94,7 @@ public class TaschenrechnerTest {
         assertTrue(calc.isErrorState());
         assertEquals("Error", calc.getDisplayText());
     }
-
-    // ----------------------------------------------------------
-    // Wiederholtes Drücken von "="
-    // ----------------------------------------------------------
+//Testet wiederholte Ausführung derselben Operation über die Gleich Taste
     @Test
     void testRepeatedEquals() {
         TaschenrechnerLogic calc = newCalc();
@@ -114,17 +102,14 @@ public class TaschenrechnerTest {
         calc.appendDigit("2");
         calc.operatorPressed("+");
         calc.appendDigit("3");
-        calc.equalsPressed();     // = 5
+        calc.equalsPressed();
 
-        calc.equalsPressed();     // = 8
-        calc.equalsPressed();     // = 11
+        calc.equalsPressed();
+        calc.equalsPressed();
 
         assertEquals("11", calc.getDisplayText());
     }
-
-    // ----------------------------------------------------------
-    // Spezialfunktionen
-    // ----------------------------------------------------------
+//Testet die korrekte Quadratrechnung
     @Test
     void testSquare() {
         TaschenrechnerLogic calc = newCalc();
@@ -132,7 +117,7 @@ public class TaschenrechnerTest {
         calc.squarePressed();
         assertEquals("16", calc.getDisplayText());
     }
-
+//Testet die korrekte Quadratwurzelberechnung
     @Test
     void testSqrt() {
         TaschenrechnerLogic calc = newCalc();
@@ -140,7 +125,7 @@ public class TaschenrechnerTest {
         calc.sqrtPressed();
         assertEquals("3", calc.getDisplayText());
     }
-
+//Erzeugt einen Fehlerzustand bei Quadratwurzel einer negativen Zahl
     @Test
     void testSqrtOfNegative() {
         TaschenrechnerLogic calc = newCalc();
@@ -151,7 +136,7 @@ public class TaschenrechnerTest {
         assertTrue(calc.isErrorState());
         assertEquals("Error", calc.getDisplayText());
     }
-
+//Testet die korrekte Uwandlung einer Dezimalzahl in eine Binärzahl
     @Test
     void testBinary() {
         TaschenrechnerLogic calc = newCalc();
@@ -159,7 +144,7 @@ public class TaschenrechnerTest {
         calc.binaryPressed();
         assertEquals("110", calc.getDisplayText());
     }
-
+//Erzeugt einen Fehlerzustand bei der Umwandlung nicht-ganzzahligen Werte
     @Test
     void testBinaryFailsOnNonInteger() {
         TaschenrechnerLogic calc = newCalc();
@@ -171,10 +156,7 @@ public class TaschenrechnerTest {
         assertTrue(calc.isErrorState());
         assertEquals("Error", calc.getDisplayText());
     }
-
-    // ----------------------------------------------------------
-    // Backspace
-    // ----------------------------------------------------------
+//Testet die korrekte Backspace Funktion
     @Test
     void testBackspace() {
         TaschenrechnerLogic calc = newCalc();
@@ -183,7 +165,7 @@ public class TaschenrechnerTest {
         calc.backspace();
         assertEquals("9", calc.getDisplayText());
     }
-
+//Testet ob nach Löschen der letzten Ziffer eine Null angezeigt wird
     @Test
     void testBackspaceToZero() {
         TaschenrechnerLogic calc = newCalc();
@@ -191,10 +173,7 @@ public class TaschenrechnerTest {
         calc.backspace();
         assertEquals("0", calc.getDisplayText());
     }
-
-    // ----------------------------------------------------------
-    // Negative Zahlen starten
-    // ----------------------------------------------------------
+//Testet die Eingabe einer negativer Zahl zu Beginn
     @Test
     void testStartNegativeNumber() {
         TaschenrechnerLogic calc = newCalc();

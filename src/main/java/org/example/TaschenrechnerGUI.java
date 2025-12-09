@@ -5,6 +5,7 @@ import java.awt.*;
 //Diese Klasse erzeugt die grafische Oberfläche des Taschenrechners
 //Hier werden die grafische Elemente des Programms definiert
 //Die folgenden Methoden verbinden die Logik mit der grafischen Oberfläche
+//Diese Klasse erbt von JFrame
 public class TaschenrechnerGUI extends JFrame {
 
     private final JTextField display = new JTextField("0");

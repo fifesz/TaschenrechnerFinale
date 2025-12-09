@@ -23,7 +23,7 @@ public class TaschenrechnerLogic {
     //errorState zeigt an,ob der Taschenrechner sich in den Fehlerzustand befindet
     private boolean errorState = false;
     //Kennzeichnet den BIN-Mode, die arithmetische Operationen sind deaktiviert
-    //BIN-Mode endet durch 'C', eine neue Zifferneingabe
+    //BIN-Mode endet durch 'C', eine neue Zifferneingabe ist danach möglich
     private boolean binaryMode = false;
 
     //Zeigt den aktuellen Display-Text an
@@ -197,7 +197,7 @@ public class TaschenrechnerLogic {
     //Wandelt den aktuellen Text auf dem Display in einem double Wert um
     private double parseDisplay() {
         //Ein einzelne '-' ist keine gültige Eingabe, es entsteht eine Ausnahme
-        if (displayText.equals("-")) throw new NumberFormatException("Zahl eingeben");
+        if (displayText.equals("-")) throw new NumberFormatException();
         return Double.parseDouble(displayText);
     }
 //Führt die Operationen aus
@@ -213,10 +213,10 @@ public class TaschenrechnerLogic {
                 return a * b;
             case "/":
                 //Division durch Null erzeugt einen Fehlermeldung
-                if (b == 0.0) throw new ArithmeticException("Division durch null");
+                if (b == 0.0) throw new ArithmeticException();
                 return a / b;
             default:
-                throw new IllegalArgumentException("Unbekannte Operator: " + op);
+                throw new IllegalArgumentException();
         }
     }
 //Wandelt einen double in einen String um
